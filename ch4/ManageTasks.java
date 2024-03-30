@@ -1,4 +1,4 @@
-package project4;
+package ch4;
 
 import java.util.Scanner;
 import java.time.LocalTime;
