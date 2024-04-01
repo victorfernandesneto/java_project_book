@@ -16,7 +16,7 @@ public class ManageTasks {
             LocalTime time = LocalTime.parse(sc.next());
             int opened = time.compareTo(openingHours);
             int closed = time.compareTo(closingHours);
-            boolean parkOpen = (opened > 0) && (closed == 0);
+            boolean parkOpen = (opened > 0) && (closed <= 0);
             if (securityRating >= 9 && parkOpen) { // All operations normal
                 System.out.print("Enter job title --> ");
                 String jobTitle = sc.next();
