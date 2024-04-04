@@ -8,36 +8,52 @@ public class Assistant {
     // teaching about it, so I'm just going to ignore some instructions and create
     // my own project.
     public static void main(String[] args) {
-        startMenu();
+        int guests = 0;
+        startMenu(guests);
     }
 
-    public static void startMenu() {
+    public static void startMenu(int guests) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to Security");
         System.out.println("Choose what to do:");
         System.out.println("1 - Check hours");
         System.out.println("2 - Check guest count");
-        System.out.println("3 - Greet a guest");
+        System.out.println("3 - Check-in guests");
+        System.out.println("4 - Check-out guests");
+        System.out.println("5 - Greet a guest");
         System.out.println("0 - Exit");
         int choice = sc.nextInt();
-        handleMenuChoice(choice);
+        handleMenuChoice(choice, guests);
         sc.close();
     }
 
-    public static void handleMenuChoice(int choice) {
+    public static void handleMenuChoice(int choice, int guests) {
+        Scanner sc = new Scanner(System.in);
+        int guestQuantity = 0;
         switch (choice) {
             case 1:
                 checkHours();
-                startMenu();
+                startMenu(guests);
             case 2:
-                checkGuestCount();
-                startMenu();
+                printGuestCount(guests);
+                startMenu(guests);
             case 3:
-                Scanner sc = new Scanner(System.in);
+                System.out.print("Enter how many guests --> ");
+                guestQuantity = sc.nextInt();
+                guests = checkInGuest(guests, guestQuantity);
+                printGuestCount(guests);
+                startMenu(guests);
+            case 4:
+                System.out.print("Enter how many guests --> ");
+                guestQuantity = sc.nextInt();
+                guests = checkOutGuest(guests, guestQuantity);
+                printGuestCount(guests);
+                startMenu(guests);
+            case 5:
                 System.out.print("Enter guest name --> ");
                 String guestName = sc.next();
                 greetGuest(guestName);
-                startMenu();
+                startMenu(guests);
             case 0:
                 System.exit(0);
         }
@@ -57,9 +73,26 @@ public class Assistant {
         }
     }
 
-    public static void checkGuestCount(){
-        int guestCount = (int) (Math.random() * 500);
-        System.out.println(guestCount + " guests");
+    public static void printGuestCount(int guests){
+        System.out.println("------\nGuests: " + guests + "\n------");
+    }
+
+    public static int checkInGuest(int guests, int guestsQuantity){
+        if(guests+guestsQuantity > 500) {
+            System.out.println("Maximum capacity reached, wait in line.");
+            return guests;
+        } else {
+            return guests + guestsQuantity;
+        }
+    }
+
+    public static int checkOutGuest(int guests, int guestsQuantity){
+        if(guests-guestsQuantity < 0) {
+            System.out.println("Impossible check-out");
+            return guests;
+        } else {
+            return guests-guestsQuantity;
+        }
     }
 
     public static void greetGuest(String guestName){
